@@ -38,6 +38,7 @@
     }
   },
   "scripts": {
+    "lint": "eslint --ext .ts,.js,.cjs,.mjs .",
     "build": "rimraf dist && rollup -c",
     "copy": "copyfiles package.json README.md LICENSE dist",
     "test": "cross-env NODE_OPTIONS='--experimental-vm-modules --no-warnings' jest",
