@@ -1,15 +1,16 @@
 import fs from "node:fs";
-import path from "node:path";
 
 import { createFilter } from "@rollup/pluginutils";
 import deepmerge from "deepmerge";
 import { type Config as SvgoConfig, loadConfig, optimize } from "svgo";
 import type { Plugin } from "vite";
 
-import { createSvgSprite, createSvgSymbol, getSymbolId } from "./tools";
-import type { RollupSvgCombinerOptions, SymbolIdFunction } from "./types";
+import { createSvgSprite, createSvgSymbol, getFilePath, getSymbolId } from "./tools";
+import type { BaseDirFunction, RollupSvgCombinerOptions, SymbolIdFunction } from "./types";
 
-const defaultSymbolId = "[dirname]-[name]";
+export * from "./types";
+
+const defaultSymbolId = "[name]";
 const defaultFileName = "svg-sprite.svg";
 
 const defaultSvgoConfig: SvgoConfig = {
@@ -27,6 +28,8 @@ const defaultSvgoConfig: SvgoConfig = {
     "removeXMLNS", // remove xmlns attribute
   ],
 };
+
+const defaultBaseDir: string = process.cwd();
 
 /**
  * Normalize svgo config, load config from file if config is a string.
@@ -58,10 +61,24 @@ function normalizeSymbolIdFunction(symbolId?: string | SymbolIdFunction): Symbol
   return typeof symbolId === "function" ? symbolId : () => symbolId || defaultSymbolId;
 }
 
+/**
+ * Normalize base dir function.
+ *
+ * @param baseDir {string | BaseDirFunction} base dir or base dir function
+ * @returns {BaseDirFunction}
+ */
+function normalizeBaseDirFunction(baseDir?: string | BaseDirFunction): BaseDirFunction {
+  if (baseDir === undefined) {
+    return () => defaultBaseDir;
+  }
+
+  return typeof baseDir === "function" ? baseDir : () => baseDir;
+}
+
 export default async function svgCombiner(options: RollupSvgCombinerOptions = {}): Promise<Plugin> {
   const filter = createFilter(options.include, options.exclude);
 
-  const baseDir = options.baseDir || process.cwd();
+  const baseDirFunction = normalizeBaseDirFunction(options.baseDir);
 
   const symbolIdFunction = normalizeSymbolIdFunction(options.symbolId);
 
@@ -78,11 +95,13 @@ export default async function svgCombiner(options: RollupSvgCombinerOptions = {}
         return null;
       }
 
-      if (!id.startsWith(baseDir)) {
+      const baseDir = baseDirFunction(id);
+
+      if (!!baseDir && !id.startsWith(baseDir)) {
         this.error(`File path "${id}" is not in baseDir "${baseDir}".`);
       }
 
-      const filePath = path.relative(baseDir, id);
+      const filePath = getFilePath(id, baseDir);
 
       const symbolIdTemplate = symbolIdFunction(filePath);
 
