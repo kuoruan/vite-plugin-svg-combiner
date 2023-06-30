@@ -9,7 +9,7 @@ Another SVG sprites plugin for Vite/Rollup. Inspired by [vite-plugin-svg-sprite]
 ## Features
 
 - Combine SVG files into one sprite file
-- Support `symbol` and `svg` mode
+- Support `runtime` and `file` mode
 - Allow to customize symbol id
 - Allow to customize sprite file name
 
@@ -59,11 +59,13 @@ export default defineConfig({
 
   - Type: `boolean | string`
 
-    Whether to emit sprite file. If `true`, the sprite file will be emitted to the output directory. If `false`, the sprite file will not be emitted. If a string, the sprite file will be emitted to the specified path.
+    Whether to emit sprite file.
 
-    When set to `true`, which means `svg` mode. the default sprite file name is `svg-sprite.svg`.
+    - If `true`, which means `file` mode, the sprite file will be emitted to the output directory, the default sprite file name is `svg-sprite.svg`.
+    - If `false`, which means `runtime` mode, the sprite file will be injected to the bundle. And insert to the DOM automatically.
+    - If a string, the sprite file will be emitted to the specified path.
 
-  - Default: `false`, `symbol` mode.
+  - Default: `false`
 
 ### symbolId
 
@@ -77,10 +79,6 @@ export default defineConfig({
       - `[name]`: The name of the SVG file. eg: `a/b/c/d.svg` -> `d`.
 
     When `symbolId` is a function, the function will be called with the SVG file path as the first argument. The SVG file path is relative to the `baseDir` option.
-
-    When using `symbol` mode, the symbol id will be used as the `id` attribute of the `<symbol>` element.
-
-    When using `svg` mode, the symbol id will be used as the `id` attribute of the `<svg>` element.
 
   - Default: `[dirname]-[name]`
 
