@@ -6,10 +6,10 @@ import { type Config as SvgoConfig, loadConfig, optimize } from "svgo";
 import type { Plugin } from "vite";
 
 import { createSvgSprite, createSvgSymbol, getSymbolId } from "./tools";
-import type { RollupSvgSpriteOptions, SymbolIdFunction } from "./types";
+import type { RollupSvgCombinerOptions, SymbolIdFunction } from "./types";
 
 const defaultSymbolId = "[dirname]-[name]";
-const defaultFileName = "sprite.svg";
+const defaultFileName = "svg-sprite.svg";
 
 const defaultSvgoConfig: SvgoConfig = {
   plugins: [
@@ -57,7 +57,7 @@ function normalizeSymbolIdFunction(symbolId?: string | SymbolIdFunction): Symbol
   return typeof symbolId === "function" ? symbolId : () => symbolId || defaultSymbolId;
 }
 
-export default async function svgSprite(options: RollupSvgSpriteOptions = {}): Promise<Plugin> {
+export default async function svgCombiner(options: RollupSvgCombinerOptions = {}): Promise<Plugin> {
   const filter = createFilter(options.include, options.exclude);
 
   const symbolIdFunction = normalizeSymbolIdFunction(options.symbolId);
@@ -67,7 +67,7 @@ export default async function svgSprite(options: RollupSvgSpriteOptions = {}): P
   const svgSymbols: Map<string, string> = new Map();
 
   return {
-    name: "vite:svg-sprite",
+    name: "vite:svg-combiner",
     enforce: "pre",
     async load(id) {
       if (!id.endsWith(".svg") || !filter(id)) {
