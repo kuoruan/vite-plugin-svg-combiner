@@ -10,7 +10,7 @@
         ],
         "jsx": "preserve",
         "declaration": true,
-        "outDir": "./dist",
+        "declarationDir": "dist/types",
         "noEmit": true,
         "strict": true,
         "noImplicitAny": true,
