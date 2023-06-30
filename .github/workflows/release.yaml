@@ -25,14 +25,19 @@ jobs:
         uses: actions/setup-node@v3
         with:
           cache: 'pnpm'
-          cache-dependency-path: './pnpm-lock.yaml'
           registry-url: 'https://registry.npmjs.org/'
 
-      - name: Install dependencies
+      - name: Install
         run: pnpm install --frozen-lockfile
 
+      - name: Test
+        run: pnpm test
+
+      - name: Bundle package
+        run: pnpm bundle
+
       - name: Publish to NPM
-        run: pnpm publish --access public --no-git-checks
+        run: pnpm publish --no-git-checks
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
@@ -42,7 +47,7 @@ jobs:
           registry-url: 'https://npm.pkg.github.com/'
 
       - name: Publish to GitHub
-        run: pnpm publish --access public --no-git-checks
+        run: pnpm publish --no-git-checks
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 

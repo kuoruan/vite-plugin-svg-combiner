@@ -29,18 +29,17 @@ jobs:
           version: latest
           run_install: false
 
-      - name: Use Node.js ${{ matrix.node-version }}
+      - name: Install Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
           cache: 'pnpm'
-          cache-dependency-path: './pnpm-lock.yaml'
 
-      - name: Install dependencies
+      - name: Install
         run: pnpm install --frozen-lockfile
-
-      - name: Build
-        run: pnpm build
 
       - name: Test
         run: pnpm test
+
+      - name: Build
+        run: pnpm build
