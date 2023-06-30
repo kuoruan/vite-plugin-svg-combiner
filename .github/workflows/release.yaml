@@ -41,13 +41,10 @@ jobs:
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
+      # https://github.com/actions/setup-node/issues/763
       - name: Set GitHub registry
-        uses: actions/setup-node@v3
-        with:
-          registry-url: 'https://npm.pkg.github.com/'
+        run: echo "//npm.pkg.github.com/:_authToken=${{ secrets.GITHUB_TOKEN }}" >> ~/.npmrc
 
       - name: Publish to GitHub
-        run: pnpm publish --no-git-checks
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: pnpm publish --no-git-checks --registry=https://npm.pkg.github.com/
 
