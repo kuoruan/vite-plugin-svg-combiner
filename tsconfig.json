@@ -17,7 +17,8 @@
         "moduleResolution": "node",
         "baseUrl": ".",
         "types": [
-            "node"
+            "node",
+            "jest"
         ],
         "paths": {
             "@/*": [
