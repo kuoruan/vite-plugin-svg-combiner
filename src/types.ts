@@ -1,7 +1,7 @@
 import type { FilterPattern } from "@rollup/pluginutils";
 import type { Config } from "svgo";
 
-export type SymbolIdFunction = (id: string) => string;
+export type SymbolIdFunction = (filePath: string) => string;
 
 export interface RollupSvgCombinerOptions {
   include?: FilterPattern;

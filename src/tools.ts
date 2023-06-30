@@ -27,20 +27,20 @@ export function createSvgSymbol(svg: string, id: string): string {
 /**
  * Get symbol id with template
  *
- * @param id {string}
- * @param template {string}
+ * @param filePath {string} the file path
+ * @param template {string} the symbolId template
  *
  * @returns {string}
  */
-export function getSymbolId(id: string, template: string, basedir?: string): string {
+export function getSymbolId(filePath: string, template: string): string {
   let symbolId: string = template;
 
   if (symbolId.includes("[name]")) {
-    symbolId = symbolId.replaceAll("[name]", path.basename(id, path.extname(id)));
+    symbolId = symbolId.replaceAll("[name]", path.basename(filePath, path.extname(filePath)));
   }
 
   if (symbolId.includes("[dirname]")) {
-    const dir = basedir ? path.relative(basedir, path.dirname(id)) : path.dirname(id);
+    const dir = path.dirname(filePath);
 
     symbolId = symbolId.replaceAll("[dirname]", dir.split(path.sep).filter(Boolean).join("-"));
   }
