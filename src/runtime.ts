@@ -18,6 +18,10 @@ if (document.readyState === "loading") {
   insertSvgSprite();
 }
 
+export function setRootId(id: string): void {
+  root.id = id;
+}
+
 export function addSymbol(symbol: string): void {
   root.insertAdjacentHTML("beforeend", symbol);
 }

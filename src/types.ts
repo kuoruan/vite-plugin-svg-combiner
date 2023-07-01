@@ -11,5 +11,6 @@ export interface RollupSvgCombinerOptions {
   emitFile?: boolean | string;
   symbolId?: string | SymbolIdFunction;
   baseDir?: string | BaseDirFunction;
+  domId?: string;
   svgoConfig?: Config | string;
 }
