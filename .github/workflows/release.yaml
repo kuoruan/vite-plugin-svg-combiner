@@ -36,15 +36,8 @@ jobs:
       - name: Bundle package
         run: pnpm bundle
 
-      - name: Publish to NPM
+      - name: Publish
         run: pnpm publish --no-git-checks
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-
-      # https://github.com/actions/setup-node/issues/763
-      - name: Set GitHub registry
-        run: echo "//npm.pkg.github.com/:_authToken=${{ secrets.GITHUB_TOKEN }}" >> ~/.npmrc
-
-      - name: Publish to GitHub
-        run: pnpm publish --no-git-checks --registry=https://npm.pkg.github.com/
 
