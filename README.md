@@ -23,15 +23,13 @@ npm i -D vite-plugin-svg-combiner
 
 ```js
 // vite.config.js
-import svgCombiner from 'vite-plugin-svg-combiner'
 import { defineConfig } from 'vite'
+import svgCombiner from 'vite-plugin-svg-combiner'
 
 export default defineConfig({
   plugins: [
     svgCombiner({
       include: ['src/assets/icons/**/*.svg'],
-      symbolId: 'icon-[dirname]-[name]',
-      baseDir: new URL('src/icons/svg', import.meta.url).pathname,
     }),
   ],
 })
@@ -61,9 +59,9 @@ export default defineConfig({
 
     Whether to emit sprite file.
 
-    - If `true`, which means `file` mode, the sprite file will be emitted to the output directory, the default sprite file name is `svg-sprite.svg`.
-    - If `false`, which means `runtime` mode, the sprite file will be injected to the bundle. And insert to the DOM automatically.
-    - If a string, the sprite file will be emitted to the specified path.
+      - If `true`, which means `file` mode, the sprite file will be emitted to the output directory, the default sprite file name is `svg-sprite.svg`.
+      - If `false`, which means `runtime` mode, the sprite file will be injected to the bundle. And insert to the DOM automatically.
+      - If a string, the sprite file will be emitted to the specified path. The path is relative to the output directory.
 
   - Default: `false`
 
@@ -71,7 +69,10 @@ export default defineConfig({
 
   - Type: `string | ((filePath: string) => string)`
 
-    Customize symbol id. If a string, the symbol id will be the specified string. If a function, the symbol id will be the return value of the function.
+    Customize symbol id.
+
+      - If a string, the symbol id will be the specified string.
+      - If a function, the symbol id will be the return value of the function.
 
     Some variables can be used in the string or function:
 
@@ -80,13 +81,17 @@ export default defineConfig({
 
     When `symbolId` is a function, the function will be called with the SVG file path as the first argument. The SVG file path is relative to the `baseDir` option.
 
-  - Default: `[dirname]-[name]`
+  - Default: `[name]`
 
 ### baseDir
 
-  - Type: `string`
+  - Type: `string | ((id: string) => string)`
 
     The base directory of the SVG files. The SVG file path is relative to the `baseDir` option.
+
+    When `baseDir` is a function, the function will be called with the absolute path of the SVG file as the first argument.
+
+    You can set `baseDir` to empty string if you want to use the absolute path of the SVG file as the symbol id.
 
   - Default: `process.cwd()`
 
@@ -117,3 +122,98 @@ export default defineConfig({
       ],
     }
     ```
+
+## Example
+
+### Runtime mode
+
+```js
+// vite.config.js
+import { defineConfig } from 'vite'
+import svgCombiner from 'vite-plugin-svg-combiner'
+
+export default defineConfig({
+  plugins: [
+    svgCombiner({
+      include: ['src/assets/icons/*.svg'],
+      emitFile: false,
+    }),
+  ],
+})
+```
+
+### File mode
+
+```js
+// vite.config.js
+import { defineConfig } from 'vite'
+import svgCombiner from 'vite-plugin-svg-combiner'
+
+export default defineConfig({
+  plugins: [
+    svgCombiner({
+      include: ['src/assets/icons/*.svg'],
+      emitFile: true, // or a string like 'assets/sprite.svg'
+    }),
+  ],
+})
+```
+
+### Custom symbol id
+
+```js
+// vite.config.js
+import { defineConfig } from 'vite'
+import svgCombiner from 'vite-plugin-svg-combiner'
+
+export default defineConfig({
+  plugins: [
+    svgCombiner({
+      include: ['src/assets/icons/**/*.svg'],
+      symbolId: 'icon-[name]',
+      baseDir: new URL('src/assets/icons', import.meta.url).pathname,
+    }),
+  ],
+})
+```
+
+### Custom symbol id function
+
+```js
+// vite.config.js
+import { defineConfig } from 'vite'
+import svgCombiner from 'vite-plugin-svg-combiner'
+
+export default defineConfig({
+  plugins: [
+    svgCombiner({
+      include: ['src/assets/icons/**/*.svg'],
+      symbolId: (filePath) => {
+        // filePath do not contain directory
+        if (!filePath.includes('/')) {
+          return `icon-[name]`
+        }
+
+        return `icon-[dirname]-[name]`
+      },
+      baseDir: new URL('src/assets/icons', import.meta.url).pathname,
+    }),
+  ],
+})
+```
+### Custom svgo config
+
+```js
+// vite.config.js
+import { defineConfig } from 'vite'
+import svgCombiner from 'vite-plugin-svg-combiner'
+
+export default defineConfig({
+  plugins: [
+    svgCombiner({
+      include: ['src/assets/icons/**/*.svg'],
+      svgoConfig: new URL('svgo.config.js', import.meta.url).pathname,
+    }),
+  ],
+})
+```
