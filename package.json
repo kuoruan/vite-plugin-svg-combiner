@@ -55,6 +55,10 @@
     "plugin"
   ],
   "author": "Xingwang Liao<kuoruan@gmail.com>",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/kuoruan/vite-plugin-svg-combiner.git"
+  },
   "homepage": "https://github.com/kuoruan/vite-plugin-svg-combiner",
   "bugs": "https://github.com/kuoruan/vite-plugin-svg-combiner/issues",
   "license": "MIT",
