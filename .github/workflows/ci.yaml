@@ -36,7 +36,10 @@ jobs:
           cache: 'pnpm'
 
       - name: Install
-        run: pnpm install --frozen-lockfile
+        run: pnpm install --frozen-
+
+      - name: Lint
+        run: pnpm lint
 
       - name: Test
         run: pnpm test
