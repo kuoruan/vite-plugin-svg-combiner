@@ -3,7 +3,7 @@ import type { Config } from "svgo";
 
 export type SymbolIdFunction = (id: string) => string;
 
-export interface RollupSvgSpriteOptions {
+export interface RollupSvgCombinerOptions {
   include?: FilterPattern;
   exclude?: FilterPattern;
   emitFile?: boolean | string;
