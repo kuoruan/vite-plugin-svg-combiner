@@ -1,3 +1,5 @@
+import path from "node:path";
+
 import { createSvgSprite, createSvgSymbol, getSymbolId } from "@/tools";
 
 describe("tools", () => {
@@ -25,35 +27,36 @@ describe("tools", () => {
 
   describe("getSymbolId", () => {
     it("should get symbol ID with template", () => {
-      const id = "/path/to/file.svg";
+      const filePath = "/path/to/file.svg";
       const template = "[name]";
-      const result = getSymbolId(id, template);
+      const result = getSymbolId(filePath, template);
 
       expect(result).toBe("file");
     });
 
     it("should get symbol ID with dirname template", () => {
-      const id = "/path/to/file.svg";
+      const filePath = "/path/to/file.svg";
       const template = "[dirname]";
-      const result = getSymbolId(id, template);
+      const result = getSymbolId(filePath, template);
 
       expect(result).toBe("path-to");
     });
 
-    it("should get symbol ID with basedir and dirname template", () => {
-      const id = "/path/to/file.svg";
-      const template = "[dirname]";
-      const basedir = "/path";
-      const result = getSymbolId(id, template, basedir);
+    it("should get symbol ID with name and dirname template", () => {
+      const filePath = "/path/to/file.svg";
+      const template = "[dirname]-[name]";
+      const result = getSymbolId(filePath, template);
 
-      expect(result).toBe("to");
+      expect(result).toBe("path-to-file");
     });
 
-    it("should get symbol ID with name and dirname template", () => {
+    it("should get symbol ID with baseDir", () => {
       const id = "/path/to/file.svg";
-      const template = "[dirname]-[name]";
-      const basedir = "/path";
-      const result = getSymbolId(id, template, basedir);
+      const baseDir = "/path";
+
+      const filePath = path.relative(baseDir, id);
+
+      const result = getSymbolId(filePath, "[dirname]-[name]");
 
       expect(result).toBe("to-file");
     });
