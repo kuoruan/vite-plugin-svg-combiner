@@ -1,4 +1,5 @@
 import fs from "node:fs";
+import path from "node:path";
 
 import { createFilter } from "@rollup/pluginutils";
 import deepmerge from "deepmerge";
@@ -60,6 +61,8 @@ function normalizeSymbolIdFunction(symbolId?: string | SymbolIdFunction): Symbol
 export default async function svgCombiner(options: RollupSvgCombinerOptions = {}): Promise<Plugin> {
   const filter = createFilter(options.include, options.exclude);
 
+  const baseDir = options.baseDir || process.cwd();
+
   const symbolIdFunction = normalizeSymbolIdFunction(options.symbolId);
 
   const svgoConfig: SvgoConfig = await normalizeSvgoConfig(options.svgoConfig);
@@ -75,13 +78,19 @@ export default async function svgCombiner(options: RollupSvgCombinerOptions = {}
         return null;
       }
 
-      const symbolIdTemplate = symbolIdFunction(id);
+      if (!id.startsWith(baseDir)) {
+        this.error(`File path "${id}" is not in baseDir "${baseDir}".`);
+      }
+
+      const filePath = path.relative(baseDir, id);
+
+      const symbolIdTemplate = symbolIdFunction(filePath);
 
       if (!symbolIdTemplate) {
         this.error(`Symbol id is empty, please check your symbolId option.`);
       }
 
-      const symbolId = getSymbolId(id, symbolIdTemplate, options.baseDir);
+      const symbolId = getSymbolId(filePath, symbolIdTemplate);
 
       if (svgSymbols.has(symbolId)) {
         this.warn(`Symbol id "${symbolId}" already exists, will be overwritten.`);
