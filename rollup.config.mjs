@@ -7,12 +7,12 @@ export default defineConfig({
   input: ["./src/index.ts", "./src/runtime.ts"],
   output: [
     {
-      entryFileNames: "[name].js",
+      entryFileNames: "es/[name].mjs",
       format: "es",
       dir: "dist",
     },
     {
-      entryFileNames: "[name].cjs",
+      entryFileNames: "cjs/[name].js",
       format: "cjs",
       dir: "dist",
       exports: "auto",
