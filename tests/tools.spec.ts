@@ -79,6 +79,15 @@ describe("tools", () => {
       expect(result).toBe("../path/to/file.svg");
     });
 
+    it("should get file path with backslash", () => {
+      const id = "C:\\path\\to\\file.svg";
+      const baseDir = "C:\\path";
+
+      const result = getFilePath(id, baseDir);
+
+      expect(result).toBe("to/file.svg");
+    });
+
     it("should get file path with windows dir", () => {
       const id = "C:/path/to/file.svg";
       const baseDir = "C:/path";

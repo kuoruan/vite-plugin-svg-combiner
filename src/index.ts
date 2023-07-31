@@ -95,14 +95,7 @@ export default async function svgCombiner(options: RollupSvgCombinerOptions = {}
         return null;
       }
 
-      let baseDir = baseDirFunction(id);
-      if (baseDir) {
-        baseDir = baseDir.replaceAll(/\\/, "/").replace(/\/$/, "");
-      }
-
-      if (!!baseDir && !id.startsWith(baseDir)) {
-        this.error(`File path "${id}" is not in baseDir "${baseDir}".`);
-      }
+      const baseDir = baseDirFunction(id);
 
       const filePath = getFilePath(id, baseDir);
 
