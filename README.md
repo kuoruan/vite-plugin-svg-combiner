@@ -163,6 +163,8 @@ export default defineConfig({
 
 ```js
 // vite.config.js
+import { fileURLToPath } from "url";
+
 import { defineConfig } from 'vite'
 import svgCombiner from 'vite-plugin-svg-combiner'
 
@@ -171,7 +173,7 @@ export default defineConfig({
     svgCombiner({
       include: ['src/assets/icons/**/*.svg'],
       symbolId: 'icon-[name]',
-      baseDir: new URL('src/assets/icons', import.meta.url).pathname,
+      baseDir: fileURLToPath(new URL('src/assets/icons', import.meta.url)),
     }),
   ],
 })
@@ -181,6 +183,8 @@ export default defineConfig({
 
 ```js
 // vite.config.js
+import { fileURLToPath } from "url";
+
 import { defineConfig } from 'vite'
 import svgCombiner from 'vite-plugin-svg-combiner'
 
@@ -196,7 +200,7 @@ export default defineConfig({
 
         return `icon-[dirname]-[name]`
       },
-      baseDir: new URL('src/assets/icons', import.meta.url).pathname,
+      baseDir: fileURLToPath(new URL('src/assets/icons', import.meta.url)),
     }),
   ],
 })
@@ -205,6 +209,8 @@ export default defineConfig({
 
 ```js
 // vite.config.js
+import { fileURLToPath } from "url";
+
 import { defineConfig } from 'vite'
 import svgCombiner from 'vite-plugin-svg-combiner'
 
@@ -212,7 +218,7 @@ export default defineConfig({
   plugins: [
     svgCombiner({
       include: ['src/assets/icons/**/*.svg'],
-      svgoConfig: new URL('svgo.config.js', import.meta.url).pathname,
+      svgoConfig: fileURLToPath(new URL('svgo.config.js', import.meta.url)),
     }),
   ],
 })

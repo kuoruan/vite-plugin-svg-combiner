@@ -54,7 +54,10 @@ export function getSymbolId(filePath: string, template: string): string {
   if (symbolId.includes("[dirname]")) {
     const dir = path.dirname(filePath);
 
-    symbolId = symbolId.replaceAll("[dirname]", dir.split(path.sep).filter(Boolean).join("-"));
+    symbolId = symbolId.replaceAll(
+      "[dirname]",
+      dir.replace(":", "").split(path.posix.sep).filter(Boolean).join("-")
+    );
   }
 
   return symbolId;

@@ -1,6 +1,6 @@
 import path from "node:path";
 
-import { createSvgSprite, createSvgSymbol, getSymbolId } from "@/tools";
+import { createSvgSprite, createSvgSymbol, getFilePath, getSymbolId } from "@/tools";
 
 describe("tools", () => {
   describe("createSvgSprite", () => {
@@ -22,6 +22,70 @@ describe("tools", () => {
 
       expect(result).toContain(`<symbol id="${id}"`);
       expect(result).toContain('<rect x="0" y="0" width="100" height="100"/>');
+    });
+  });
+
+  describe("getFilePath", () => {
+    it("should get file path", () => {
+      const id = "/path/to/file.svg";
+      const baseDir = "/path";
+
+      const result = getFilePath(id, baseDir);
+
+      expect(result).toBe("to/file.svg");
+    });
+
+    it("should get file path without baseDir", () => {
+      const id = "/path/to/file.svg";
+
+      const result = getFilePath(id, "");
+
+      expect(result).toBe("/path/to/file.svg");
+    });
+
+    it("should get file path with baseDir as dot and id as relative path", () => {
+      const id = "path/to/file.svg";
+      const baseDir = ".";
+
+      const result = getFilePath(id, baseDir);
+
+      expect(result).toBe("path/to/file.svg");
+    });
+
+    it("should get file path with baseDir as dot and id as relative path with dot", () => {
+      const id = "./path/to/file.svg";
+      const baseDir = ".";
+
+      const result = getFilePath(id, baseDir);
+
+      expect(result).toBe("path/to/file.svg");
+    });
+
+    it("should get file path with baseDir as dot and id as relative path with double dot", () => {
+      const id = "../path/to/file.svg";
+      const baseDir = ".";
+
+      const result = getFilePath(id, baseDir);
+
+      expect(result).toBe("../path/to/file.svg");
+    });
+
+    it("should get file path with baseDir as dot and id as relative path with double dot and slash", () => {
+      const id = "../path/to/file.svg";
+      const baseDir = "./";
+
+      const result = getFilePath(id, baseDir);
+
+      expect(result).toBe("../path/to/file.svg");
+    });
+
+    it("should get file path with windows dir", () => {
+      const id = "C:/path/to/file.svg";
+      const baseDir = "C:/path";
+
+      const result = getFilePath(id, baseDir);
+
+      expect(result).toBe("to/file.svg");
     });
   });
 
