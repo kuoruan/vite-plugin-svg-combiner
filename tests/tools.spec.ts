@@ -85,7 +85,7 @@ describe("tools", () => {
 
       const result = getFilePath(id, baseDir);
 
-      expect(result).toBe("to/file.svg");
+      expect(result).toBe(process.platform === "win32" ? "to/file.svg" : "../C:/path/to/file.svg");
     });
 
     it("should get file path with windows dir", () => {

@@ -33,7 +33,7 @@ export function createSvgSymbol(svg: string, id: string): string {
  * @returns {string} the relative file path
  */
 export function getFilePath(id: string, baseDir: string): string {
-  return baseDir ? path.relative(baseDir, id).replaceAll("\\", "/") : id;
+  return baseDir ? path.relative(baseDir, id).replaceAll(path.win32.sep, path.posix.sep) : id;
 }
 
 /**
@@ -56,7 +56,7 @@ export function getSymbolId(filePath: string, template: string): string {
 
     symbolId = symbolId.replaceAll(
       "[dirname]",
-      dir.replace(":", "").split(path.sep).filter(Boolean).join("-")
+      dir.replace(":", "").split(path.posix.sep).filter(Boolean).join("-")
     );
   }
 
