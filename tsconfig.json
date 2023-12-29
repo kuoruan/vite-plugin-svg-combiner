@@ -29,7 +29,8 @@
         "esModuleInterop": true,
         "resolveJsonModule": false,
         "skipLibCheck": true,
-        "forceConsistentCasingInFileNames": true
+        "forceConsistentCasingInFileNames": true,
+        "verbatimModuleSyntax": true
     },
     "include": [
         "src/**/*.ts",

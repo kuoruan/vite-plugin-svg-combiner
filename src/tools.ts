@@ -46,17 +46,15 @@ export function getFilePath(id: string, baseDir: string): string {
  */
 export function getSymbolId(filePath: string, template: string): string {
   let symbolId: string = template;
-
   if (symbolId.includes("[name]")) {
     symbolId = symbolId.replaceAll("[name]", path.basename(filePath, path.extname(filePath)));
   }
-
   if (symbolId.includes("[dirname]")) {
     const dir = path.dirname(filePath);
 
     symbolId = symbolId.replaceAll(
       "[dirname]",
-      dir.replace(":", "").split(path.posix.sep).filter(Boolean).join("-")
+      dir.replace(":", "").split(path.posix.sep).filter(Boolean).join("-"),
     );
   }
 

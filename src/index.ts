@@ -58,7 +58,7 @@ async function normalizeSvgoConfig(config?: string | SvgoConfig): Promise<SvgoCo
  * @returns {SymbolIdFn}
  */
 function normalizeSymbolIdFunction(symbolId?: string | SymbolIdFunction): SymbolIdFunction {
-  return typeof symbolId === "function" ? symbolId : () => symbolId || defaultSymbolId;
+  return typeof symbolId === "function" ? symbolId : () => symbolId ?? defaultSymbolId;
 }
 
 /**
@@ -84,7 +84,7 @@ export default async function svgCombiner(options: RollupSvgCombinerOptions = {}
 
   const svgoConfig: SvgoConfig = await normalizeSvgoConfig(options.svgoConfig);
 
-  const svgSymbols: Map<string, string> = new Map();
+  const svgSymbols = new Map<string, string>();
 
   return {
     name: "vite:svg-combiner",
