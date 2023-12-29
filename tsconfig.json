@@ -34,7 +34,8 @@
     },
     "include": [
         "src/**/*.ts",
-        "typings/**/*.d.ts"
+        "typings/**/*.d.ts",
+        "client.d.ts"
     ],
     "exclude": [
         "node_modules"
