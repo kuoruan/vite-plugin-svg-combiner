@@ -1,2 +1,5 @@
-op_mini all
-ie >= 9
+[browser]
+supports es5
+
+[node]
+node >= 16

@@ -30,6 +30,13 @@ export default defineConfig([
         },
       }),
       typescript(),
+      babel({
+        babelHelpers: "bundled",
+        configFile: true,
+        browserslistEnv: "node",
+        browserslistConfigFile: true,
+        extensions: [".ts", ".js", ".mjs"],
+      }),
     ],
   },
   {
@@ -52,6 +59,7 @@ export default defineConfig([
       babel({
         babelHelpers: "bundled",
         configFile: true,
+        browserslistEnv: "browser",
         browserslistConfigFile: true,
         extensions: [".ts", ".js", ".mjs"],
       }),
