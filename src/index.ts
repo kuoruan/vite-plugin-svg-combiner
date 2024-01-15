@@ -84,7 +84,7 @@ export default async function svgCombiner(options: RollupSvgCombinerOptions = {}
 
   const svgoConfig: SvgoConfig = await normalizeSvgoConfig(options.svgoConfig);
 
-  const svgSymbols = new Map<string, string>();
+  const svgSymbols = new Map<string, Record<"id" | "symbol", string>>();
 
   return {
     name: "vite:svg-combiner",
@@ -107,7 +107,7 @@ export default async function svgCombiner(options: RollupSvgCombinerOptions = {}
 
       const symbolId = getSymbolId(filePath, symbolIdTemplate);
 
-      if (svgSymbols.has(symbolId)) {
+      if (svgSymbols.has(symbolId) && id !== svgSymbols.get(symbolId)?.id) {
         this.warn(`Symbol id "${symbolId}" already exists, will be overwritten.`);
       }
 
@@ -117,7 +117,10 @@ export default async function svgCombiner(options: RollupSvgCombinerOptions = {}
 
       const symbol = createSvgSymbol(result.data, symbolId);
 
-      svgSymbols.set(symbolId, symbol);
+      svgSymbols.set(symbolId, {
+        id,
+        symbol,
+      });
 
       const defaultExport = `export default ${JSON.stringify(symbolId)};`;
 
@@ -146,7 +149,7 @@ export default async function svgCombiner(options: RollupSvgCombinerOptions = {}
         this.emitFile({
           type: "asset",
           fileName: typeof options.emitFile === "string" ? options.emitFile : defaultFileName,
-          source: createSvgSprite([...svgSymbols.values()]),
+          source: createSvgSprite([...svgSymbols.values()].map((item) => item.symbol)),
         });
       }
 
