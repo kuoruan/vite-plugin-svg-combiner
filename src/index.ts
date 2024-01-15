@@ -75,6 +75,24 @@ function normalizeBaseDirFunction(baseDir?: string | BaseDirFunction): BaseDirFu
   return typeof baseDir === "function" ? baseDir : () => baseDir;
 }
 
+/**
+ * Check if the id is a svg file path.
+ *
+ * @param id {string} id to check
+ * @returns {boolean}
+ */
+function isSvgFilePath(id: string): boolean {
+  if (!id) return false;
+
+  const queryIndex = id.lastIndexOf("?");
+
+  if (queryIndex !== -1) {
+    id = id.slice(0, queryIndex);
+  }
+
+  return id.endsWith(".svg");
+}
+
 export default async function svgCombiner(options: RollupSvgCombinerOptions = {}): Promise<Plugin> {
   const filter = createFilter(options.include, options.exclude);
 
@@ -90,7 +108,7 @@ export default async function svgCombiner(options: RollupSvgCombinerOptions = {}
     name: "vite:svg-combiner",
     enforce: "pre",
     async load(id) {
-      if (!id.endsWith(".svg") || !filter(id)) {
+      if (!isSvgFilePath(id) || !filter(id)) {
         // ignore, other load function will handle it
         return null;
       }
