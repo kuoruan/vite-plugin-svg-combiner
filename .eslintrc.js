@@ -40,7 +40,7 @@ module.exports = {
       ],
       parser: "@typescript-eslint/parser",
       parserOptions: {
-        project: ["**/tsconfig.json"],
+        project: ["./tsconfig.json", "./tsconfig.test.json"],
         warnOnUnsupportedTypeScriptVersion: false,
       },
       settings: {
@@ -51,10 +51,15 @@ module.exports = {
       },
     },
     {
-      files: ["*.spec.ts"],
-      extends: ["plugin:jest/recommended", "plugin:jest/style"],
+      files: ["tests/**/*.ts"],
+      extends: ["plugin:vitest/recommended"],
       env: {
-        "jest/globals": true,
+        "vitest/env": true,
+      },
+      rules: {
+        "@typescript-eslint/no-explicit-any": "off",
+        "@typescript-eslint/no-unsafe-call": "off",
+        "@typescript-eslint/no-unsafe-member-access": "off",
       },
     },
   ],

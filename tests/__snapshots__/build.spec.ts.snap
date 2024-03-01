@@ -1,0 +1,31 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`build > should build 1`] = `
+"let root;
+function insertSvgSprite() {
+  if (!root)
+    return;
+  document.body.insertBefore(root, document.body.firstChild);
+}
+if (typeof document !== "undefined") {
+  root = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+  root.id = "svg-sprite";
+  root.style.position = "absolute";
+  root.style.left = "-1px";
+  root.style.top = "-1px";
+  root.style.width = "0px";
+  root.style.height = "0px";
+  root.style.visibility = "hidden";
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", insertSvgSprite);
+  } else {
+    insertSvgSprite();
+  }
+}
+function addSymbol(symbol) {
+  root == null ? void 0 : root.insertAdjacentHTML("beforeend", symbol);
+}
+addSymbol('<symbol id="add" viewBox="0 -960 960 960"><path d="M440-440H200v-80h240v-240h80v240h240v80H520v240h-80z"/></symbol>');
+addSymbol('<symbol id="close" viewBox="0 -960 960 960"><path d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224z"/></symbol>');
+"
+`;
