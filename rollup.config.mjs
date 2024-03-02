@@ -29,7 +29,9 @@ export default defineConfig([
           __packageName__: JSON.stringify(process.env.npm_package_name),
         },
       }),
-      typescript(),
+      typescript({
+        tsconfig: "./tsconfig.build.json",
+      }),
       babel({
         babelHelpers: "bundled",
         configFile: true,
@@ -55,7 +57,9 @@ export default defineConfig([
       },
     ],
     plugins: [
-      typescript(),
+      typescript({
+        tsconfig: "./tsconfig.build.json",
+      }),
       babel({
         babelHelpers: "bundled",
         configFile: true,

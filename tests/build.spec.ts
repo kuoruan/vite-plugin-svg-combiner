@@ -8,7 +8,7 @@ import svgCombiner from "@/index";
 
 import viteConfig from "./vite.config";
 
-const root = fileURLToPath(import.meta.url);
+const root = fileURLToPath(new URL(".", import.meta.url));
 
 describe("build", () => {
   it("should build", async () => {
