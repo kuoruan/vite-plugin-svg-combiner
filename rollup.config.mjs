@@ -3,7 +3,7 @@ import replace from "@rollup/plugin-replace";
 import terser from "@rollup/plugin-terser";
 import typescript from "@rollup/plugin-typescript";
 import { defineConfig } from "rollup";
-import { externals } from "rollup-plugin-node-externals";
+import { nodeExternals } from "rollup-plugin-node-externals";
 
 export default defineConfig([
   {
@@ -22,7 +22,7 @@ export default defineConfig([
       },
     ],
     plugins: [
-      externals(),
+      nodeExternals(),
       replace({
         preventAssignment: true,
         values: {
