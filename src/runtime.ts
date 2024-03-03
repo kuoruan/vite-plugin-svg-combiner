@@ -33,6 +33,18 @@ export function setRootId(id: string): void {
   }
 }
 
-export function addSymbol(symbol: string): void {
-  root?.insertAdjacentHTML("beforeend", symbol);
+export function addSymbol(symbolId: string, symbol: string): void {
+  if (!root) return;
+
+  const symbolNode = root.querySelector(`#${symbolId}`);
+  if (symbolNode) {
+    try {
+      symbolNode.remove();
+    } catch {
+      // eslint-disable-next-line unicorn/prefer-dom-node-remove
+      root.removeChild(symbolNode);
+    }
+  }
+
+  root.insertAdjacentHTML("beforeend", symbol);
 }

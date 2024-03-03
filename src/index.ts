@@ -135,10 +135,7 @@ export default async function svgCombiner(options: RollupSvgCombinerOptions = {}
 
       const symbol = createSvgSymbol(result.data, symbolId);
 
-      svgSymbols.set(symbolId, {
-        id,
-        symbol,
-      });
+      svgSymbols.set(symbolId, { id, symbol });
 
       const defaultExport = `export default ${JSON.stringify(symbolId)};`;
 
@@ -147,7 +144,7 @@ export default async function svgCombiner(options: RollupSvgCombinerOptions = {}
           code: [
             `import { addSymbol } from "${__packageName__}/runtime";`,
             "",
-            `addSymbol(${JSON.stringify(symbol)});`,
+            `addSymbol(${JSON.stringify(symbolId)}, ${JSON.stringify(symbol)});`,
             "",
             defaultExport,
           ].join("\n"),
