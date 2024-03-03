@@ -3,8 +3,10 @@ import { fileURLToPath } from "node:url";
 import { defineConfig } from "vite";
 
 const sourceRoot = fileURLToPath(new URL("../src", import.meta.url));
+const root = fileURLToPath(new URL(".", import.meta.url));
 
 export default defineConfig({
+  root: root,
   logLevel: "silent",
   resolve: {
     alias: {
