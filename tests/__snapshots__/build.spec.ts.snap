@@ -38,6 +38,51 @@ addSymbol("add", '<symbol id="add" viewBox="0 -960 960 960"><path d="M440-440H20
 "
 `;
 
+exports[`build > custom element id 1`] = `
+"let root;
+let elementId = "svg-sprite";
+if (typeof document !== "undefined") {
+  root = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+  root.id = elementId;
+  root.style.position = "absolute";
+  root.style.left = "-1px";
+  root.style.top = "-1px";
+  root.style.width = "0px";
+  root.style.height = "0px";
+  root.style.visibility = "hidden";
+  const insertSvgSprite = () => {
+    document.body.insertBefore(root, document.body.firstChild);
+  };
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", insertSvgSprite);
+  } else {
+    insertSvgSprite();
+  }
+}
+function setElementId(id) {
+  elementId = id;
+  if (root) {
+    root.id = id;
+  }
+}
+function addSymbol(symbolId, symbol) {
+  if (!root)
+    return;
+  const symbolNode = root.querySelector(\`#\${symbolId}\`);
+  if (symbolNode) {
+    try {
+      symbolNode.remove();
+    } catch {
+      root.removeChild(symbolNode);
+    }
+  }
+  root.insertAdjacentHTML("beforeend", symbol);
+}
+addSymbol("add", '<symbol id="add" viewBox="0 -960 960 960"><path d="M440-440H200v-80h240v-240h80v240h240v80H520v240h-80z"/></symbol>');
+setElementId("custom-id");
+"
+`;
+
 exports[`build > glob import 1`] = `
 "let root;
 let elementId = "svg-sprite";

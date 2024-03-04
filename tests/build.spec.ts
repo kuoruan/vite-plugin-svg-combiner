@@ -65,6 +65,21 @@ describe("build", () => {
 
     expect(data.output[0].code).toMatchSnapshot();
   });
+
+  it("custom element id", async () => {
+    const data = (await build(
+      mergeConfig(viteConfig, {
+        build: {
+          rollupOptions: {
+            input: "/fixtures/basic.ts",
+          },
+        },
+        plugins: [svgCombiner({ elementId: "custom-id" })],
+      }),
+    )) as RollupOutput;
+
+    expect(data.output[0].code).toMatchSnapshot();
+  });
 });
 
 describe("build file", () => {

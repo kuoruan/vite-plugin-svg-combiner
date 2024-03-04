@@ -25,7 +25,7 @@ if (typeof document !== "undefined") {
   }
 }
 
-export function setRootId(id: string): void {
+export function setElementId(id: string): void {
   elementId = id;
 
   if (root) {

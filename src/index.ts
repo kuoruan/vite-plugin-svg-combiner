@@ -157,6 +157,16 @@ export default async function svgCombiner(options: RollupSvgCombinerOptions = {}
         map: { mappings: "" },
       };
     },
+    transform(code, moduleId) {
+      if (options.elementId && this.getModuleInfo(moduleId)?.isEntry) {
+        return [
+          `import { setElementId } from "${__packageName__}/runtime";`,
+          code,
+          "",
+          `setElementId(${JSON.stringify(options.elementId)})`,
+        ].join("\n");
+      }
+    },
     generateBundle() {
       if (svgSymbols.size <= 0) return;
 
