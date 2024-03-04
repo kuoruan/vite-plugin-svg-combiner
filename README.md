@@ -65,6 +65,14 @@ export default defineConfig({
 
   - Default: `false`
 
+### elementId
+
+  - Type: `string`
+
+    The id of the sprite element.
+
+  - Default: `svg-sprite`
+
 ### symbolId
 
   - Type: `string | ((filePath: string) => string)`
