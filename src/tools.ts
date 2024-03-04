@@ -7,8 +7,8 @@ import path from "node:path";
  * @param inline {boolean} whether to inline the sprite
  * @returns {string}
  */
-export function createSvgSprite(symbols: string[]): string {
-  return `<svg xmlns="http://www.w3.org/2000/svg">${symbols.join("")}</svg>`;
+export function createSvgSprite(symbols: string[], id: string): string {
+  return `<svg id="${id}" xmlns="http://www.w3.org/2000/svg">${symbols.join("")}</svg>`;
 }
 
 /**

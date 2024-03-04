@@ -10,6 +10,7 @@ import type { BaseDirFunction, RollupSvgCombinerOptions, SymbolIdFunction } from
 
 export * from "./types";
 
+const defaultSvgSpriteId = "svg-sprite";
 const defaultSymbolId = "[name]";
 const defaultFileName = "svg-sprite.svg";
 
@@ -174,7 +175,10 @@ export default async function svgCombiner(options: RollupSvgCombinerOptions = {}
         this.emitFile({
           type: "asset",
           fileName: typeof options.emitFile === "string" ? options.emitFile : defaultFileName,
-          source: createSvgSprite([...svgSymbols.values()].map((item) => item.symbol)),
+          source: createSvgSprite(
+            [...svgSymbols.values()].map((item) => item.symbol),
+            options.elementId ?? defaultSvgSpriteId,
+          ),
         });
       }
 

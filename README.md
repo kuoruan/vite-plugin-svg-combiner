@@ -10,6 +10,7 @@ Another SVG sprites plugin for Vite/Rollup. Inspired by [vite-plugin-svg-sprite]
 
 - Combine SVG files into one sprite file
 - Support `runtime` and `file` mode
+- Allow to customize sprite element id
 - Allow to customize symbol id
 - Allow to customize sprite file name
 

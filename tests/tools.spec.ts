@@ -6,9 +6,9 @@ describe("tools", () => {
   describe("createSvgSprite", () => {
     it("should create an SVG sprite with symbols", () => {
       const symbols = ['<symbol id="symbol1"></symbol>', '<symbol id="symbol2"></symbol>'];
-      const result = createSvgSprite(symbols);
+      const result = createSvgSprite(symbols, "svg-sprite");
 
-      expect(result).toContain('<svg xmlns="http://www.w3.org/2000/svg">');
+      expect(result).toContain('<svg id="svg-sprite" xmlns="http://www.w3.org/2000/svg">');
       expect(result).toContain('<symbol id="symbol1"></symbol>');
       expect(result).toContain('<symbol id="symbol2"></symbol>');
     });
