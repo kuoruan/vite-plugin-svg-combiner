@@ -5,7 +5,7 @@ import deepmerge from "deepmerge";
 import { type Config as SvgoConfig, loadConfig, optimize } from "svgo";
 import type { Plugin } from "vite";
 
-import { createSvgSprite, createSvgSymbol, getFilePath, getSymbolId } from "./tools";
+import { createSvgSprite, createSvgSymbol, getFilePath, getSymbolId, isSvgFilePath } from "./tools";
 import type { BaseDirFunction, RollupSvgCombinerOptions, SymbolIdFunction } from "./types";
 
 export * from "./types";
@@ -75,24 +75,6 @@ function normalizeBaseDirFunction(baseDir?: string | BaseDirFunction): BaseDirFu
   return typeof baseDir === "function" ? baseDir : () => baseDir;
 }
 
-/**
- * Check if the module id is a svg file path.
- *
- * @param moduleId {string} id to check
- * @returns {boolean}
- */
-function isSvgFilePath(moduleId: string): boolean {
-  if (!moduleId) return false;
-
-  const queryIndex = moduleId.lastIndexOf("?");
-
-  if (queryIndex !== -1) {
-    moduleId = moduleId.slice(0, queryIndex);
-  }
-
-  return moduleId.endsWith(".svg");
-}
-
 export default async function svgCombiner(options: RollupSvgCombinerOptions = {}): Promise<Plugin> {
   const filter = createFilter(options.include, options.exclude);
 
@@ -113,6 +95,34 @@ export default async function svgCombiner(options: RollupSvgCombinerOptions = {}
         return null;
       }
 
+      // load svg file as text
+      const code: string = await fs.promises.readFile(moduleId, "utf8");
+
+      return {
+        code,
+        map: { mappings: "" },
+      };
+    },
+    transform(code, moduleId) {
+      let entryCodeInject = "";
+
+      if (options.elementId && this.getModuleInfo(moduleId)?.isEntry) {
+        entryCodeInject = [
+          `import { setElementId } from "${__packageName__}/runtime";`,
+          "",
+          `setElementId(${JSON.stringify(options.elementId)});`,
+          "",
+        ].join("\n");
+      }
+
+      if (!isSvgFilePath(moduleId) || !filter(moduleId)) {
+        if (entryCodeInject) {
+          return entryCodeInject + code;
+        }
+
+        return null;
+      }
+
       const baseDir = baseDirFunction(moduleId);
 
       const filePath = getFilePath(moduleId, baseDir);
@@ -129,8 +139,6 @@ export default async function svgCombiner(options: RollupSvgCombinerOptions = {}
         this.warn(`Symbol id "${symbolId}" already exists, will be overwritten.`);
       }
 
-      const code: string = await fs.promises.readFile(moduleId, "utf8");
-
       const result = optimize(code, svgoConfig);
 
       const symbol = createSvgSymbol(result.data, symbolId);
@@ -141,31 +149,23 @@ export default async function svgCombiner(options: RollupSvgCombinerOptions = {}
 
       if (!options.emitFile) {
         return {
-          code: [
-            `import { addSymbol } from "${__packageName__}/runtime";`,
-            "",
-            `addSymbol(${JSON.stringify(symbol)}, ${JSON.stringify(symbolId)});`,
-            "",
-            defaultExport,
-          ].join("\n"),
+          code:
+            entryCodeInject +
+            [
+              `import { addSymbol } from "${__packageName__}/runtime";`,
+              "",
+              `addSymbol(${JSON.stringify(symbol)}, ${JSON.stringify(symbolId)});`,
+              "",
+              defaultExport,
+            ].join("\n"),
           map: { mappings: "" },
         };
       }
 
       return {
-        code: defaultExport,
+        code: entryCodeInject + defaultExport,
         map: { mappings: "" },
       };
-    },
-    transform(code, moduleId) {
-      if (options.elementId && this.getModuleInfo(moduleId)?.isEntry) {
-        return [
-          `import { setElementId } from "${__packageName__}/runtime";`,
-          code,
-          "",
-          `setElementId(${JSON.stringify(options.elementId)})`,
-        ].join("\n");
-      }
     },
     generateBundle() {
       if (svgSymbols.size <= 0) return;

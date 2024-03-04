@@ -62,3 +62,21 @@ export function getSymbolId(filePath: string, template: string): string {
 
   return symbolId;
 }
+
+/**
+ * Check if the module id is a svg file path.
+ *
+ * @param moduleId {string} id to check
+ * @returns {boolean}
+ */
+export function isSvgFilePath(moduleId: string): boolean {
+  if (!moduleId) return false;
+
+  const queryIndex = moduleId.lastIndexOf("?");
+
+  if (queryIndex !== -1) {
+    moduleId = moduleId.slice(0, queryIndex);
+  }
+
+  return moduleId.endsWith(".svg");
+}
