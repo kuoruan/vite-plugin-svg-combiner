@@ -33,7 +33,7 @@ export function setElementId(id: string): void {
   }
 }
 
-export function addSymbol(symbolId: string, symbol: string): void {
+export function addSymbol(symbol: string, symbolId: string): void {
   if (!root) return;
 
   const symbolNode = root.querySelector(`#${symbolId}`);

@@ -21,7 +21,7 @@ if (typeof document !== "undefined") {
     insertSvgSprite();
   }
 }
-function addSymbol(symbolId, symbol) {
+function addSymbol(symbol, symbolId) {
   if (!root)
     return;
   const symbolNode = root.querySelector(\`#\${symbolId}\`);
@@ -34,7 +34,7 @@ function addSymbol(symbolId, symbol) {
   }
   root.insertAdjacentHTML("beforeend", symbol);
 }
-addSymbol("add", '<symbol id="add" viewBox="0 -960 960 960"><path d="M440-440H200v-80h240v-240h80v240h240v80H520v240h-80z"/></symbol>');
+addSymbol('<symbol id="add" viewBox="0 -960 960 960"><path d="M440-440H200v-80h240v-240h80v240h240v80H520v240h-80z"/></symbol>', "add");
 "
 `;
 
@@ -65,7 +65,7 @@ function setElementId(id) {
     root.id = id;
   }
 }
-function addSymbol(symbolId, symbol) {
+function addSymbol(symbol, symbolId) {
   if (!root)
     return;
   const symbolNode = root.querySelector(\`#\${symbolId}\`);
@@ -78,7 +78,7 @@ function addSymbol(symbolId, symbol) {
   }
   root.insertAdjacentHTML("beforeend", symbol);
 }
-addSymbol("add", '<symbol id="add" viewBox="0 -960 960 960"><path d="M440-440H200v-80h240v-240h80v240h240v80H520v240h-80z"/></symbol>');
+addSymbol('<symbol id="add" viewBox="0 -960 960 960"><path d="M440-440H200v-80h240v-240h80v240h240v80H520v240h-80z"/></symbol>', "add");
 setElementId("custom-id");
 "
 `;
@@ -104,7 +104,7 @@ if (typeof document !== "undefined") {
     insertSvgSprite();
   }
 }
-function addSymbol(symbolId, symbol) {
+function addSymbol(symbol, symbolId) {
   if (!root)
     return;
   const symbolNode = root.querySelector(\`#\${symbolId}\`);
@@ -117,9 +117,9 @@ function addSymbol(symbolId, symbol) {
   }
   root.insertAdjacentHTML("beforeend", symbol);
 }
-addSymbol("add", '<symbol id="add" viewBox="0 -960 960 960"><path d="M440-440H200v-80h240v-240h80v240h240v80H520v240h-80z"/></symbol>');
-addSymbol("remove", '<symbol id="remove" viewBox="0 -960 960 960"><path d="M200-440v-80h560v80z"/></symbol>');
-addSymbol("verdaccio-small", '<symbol id="verdaccio-small" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 100 100"><defs><path id="a" d="M48 17.6 32.8 48H24L.4.8h15.2l12.8 25.6 4.4-8.8z"/><path id="d" d="M50.8 12H35.6L41.2.8h15.2z"/><path id="f" d="M32.8 48H24L.4.8h15.2l20.377 40.89z"/><filter id="c" width="139.9%" height="140.3%" x="-20%" y="-11.7%" filterUnits="objectBoundingBox"><feOffset dy="4" in="SourceAlpha" result="shadowOffsetOuter1"/><feGaussianBlur in="shadowOffsetOuter1" result="shadowBlurOuter1" stdDeviation="2.5"/><feComposite in="shadowBlurOuter1" in2="SourceAlpha" operator="out" result="shadowBlurOuter1"/><feColorMatrix in="shadowBlurOuter1" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.0906646286 0"/></filter><filter id="e" width="191.3%" height="269.6%" x="-45.7%" y="-49.1%" filterUnits="objectBoundingBox"><feOffset dy="4" in="SourceAlpha" result="shadowOffsetOuter1"/><feGaussianBlur in="shadowOffsetOuter1" result="shadowBlurOuter1" stdDeviation="2.5"/><feComposite in="shadowBlurOuter1" in2="SourceAlpha" operator="out" result="shadowBlurOuter1"/><feColorMatrix in="shadowBlurOuter1" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.0906646286 0"/></filter></defs><g fill="none" fill-rule="evenodd"><rect width="100" height="100" fill="#F7F8F6" rx="37"/><g transform="translate(22 29)"><use xlink:href="#a" fill="#000" filter="url(#c)"/><use xlink:href="#a" fill="#405236"/><path stroke="#405236" stroke-width="2.4" d="M46.058 18.8H33.542L28.4 29.083 14.858 2H2.342l22.4 44.8h7.316z"/></g><g transform="translate(22 29)"><use xlink:href="#d" fill="#000" filter="url(#e)"/><use xlink:href="#d" fill="#CD4000"/><path stroke="#CD4000" stroke-width="2.4" d="m50.058 10.8 4.4-8.8H41.942l-4.4 8.8z"/></g><g transform="translate(22 29)"><use xlink:href="#f" fill="#4A5E3F"/><path stroke="#405236" stroke-width="2.4" d="m32.06 46.8 2.575-5.112L14.857 2H2.342l22.4 44.8z"/></g><path stroke="#CD4000" stroke-linecap="square" stroke-width="2.4" d="M59.6 31h15.221M55.6 35h15.221M51.6 39.8h15.221"/></g></symbol>');
+addSymbol('<symbol id="add" viewBox="0 -960 960 960"><path d="M440-440H200v-80h240v-240h80v240h240v80H520v240h-80z"/></symbol>', "add");
+addSymbol('<symbol id="remove" viewBox="0 -960 960 960"><path d="M200-440v-80h560v80z"/></symbol>', "remove");
+addSymbol('<symbol id="verdaccio-small" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 100 100"><defs><path id="a" d="M48 17.6 32.8 48H24L.4.8h15.2l12.8 25.6 4.4-8.8z"/><path id="d" d="M50.8 12H35.6L41.2.8h15.2z"/><path id="f" d="M32.8 48H24L.4.8h15.2l20.377 40.89z"/><filter id="c" width="139.9%" height="140.3%" x="-20%" y="-11.7%" filterUnits="objectBoundingBox"><feOffset dy="4" in="SourceAlpha" result="shadowOffsetOuter1"/><feGaussianBlur in="shadowOffsetOuter1" result="shadowBlurOuter1" stdDeviation="2.5"/><feComposite in="shadowBlurOuter1" in2="SourceAlpha" operator="out" result="shadowBlurOuter1"/><feColorMatrix in="shadowBlurOuter1" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.0906646286 0"/></filter><filter id="e" width="191.3%" height="269.6%" x="-45.7%" y="-49.1%" filterUnits="objectBoundingBox"><feOffset dy="4" in="SourceAlpha" result="shadowOffsetOuter1"/><feGaussianBlur in="shadowOffsetOuter1" result="shadowBlurOuter1" stdDeviation="2.5"/><feComposite in="shadowBlurOuter1" in2="SourceAlpha" operator="out" result="shadowBlurOuter1"/><feColorMatrix in="shadowBlurOuter1" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.0906646286 0"/></filter></defs><g fill="none" fill-rule="evenodd"><rect width="100" height="100" fill="#F7F8F6" rx="37"/><g transform="translate(22 29)"><use xlink:href="#a" fill="#000" filter="url(#c)"/><use xlink:href="#a" fill="#405236"/><path stroke="#405236" stroke-width="2.4" d="M46.058 18.8H33.542L28.4 29.083 14.858 2H2.342l22.4 44.8h7.316z"/></g><g transform="translate(22 29)"><use xlink:href="#d" fill="#000" filter="url(#e)"/><use xlink:href="#d" fill="#CD4000"/><path stroke="#CD4000" stroke-width="2.4" d="m50.058 10.8 4.4-8.8H41.942l-4.4 8.8z"/></g><g transform="translate(22 29)"><use xlink:href="#f" fill="#4A5E3F"/><path stroke="#405236" stroke-width="2.4" d="m32.06 46.8 2.575-5.112L14.857 2H2.342l22.4 44.8z"/></g><path stroke="#CD4000" stroke-linecap="square" stroke-width="2.4" d="M59.6 31h15.221M55.6 35h15.221M51.6 39.8h15.221"/></g></symbol>', "verdaccio-small");
 "
 `;
 
@@ -144,7 +144,7 @@ if (typeof document !== "undefined") {
     insertSvgSprite();
   }
 }
-function addSymbol(symbolId, symbol) {
+function addSymbol(symbol, symbolId) {
   if (!root)
     return;
   const symbolNode = root.querySelector(\`#\${symbolId}\`);
@@ -157,7 +157,7 @@ function addSymbol(symbolId, symbol) {
   }
   root.insertAdjacentHTML("beforeend", symbol);
 }
-addSymbol("verdaccio-small", '<symbol id="verdaccio-small" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 100 100"><defs><path id="a" d="M48 17.6 32.8 48H24L.4.8h15.2l12.8 25.6 4.4-8.8z"/><path id="d" d="M50.8 12H35.6L41.2.8h15.2z"/><path id="f" d="M32.8 48H24L.4.8h15.2l20.377 40.89z"/><filter id="c" width="139.9%" height="140.3%" x="-20%" y="-11.7%" filterUnits="objectBoundingBox"><feOffset dy="4" in="SourceAlpha" result="shadowOffsetOuter1"/><feGaussianBlur in="shadowOffsetOuter1" result="shadowBlurOuter1" stdDeviation="2.5"/><feComposite in="shadowBlurOuter1" in2="SourceAlpha" operator="out" result="shadowBlurOuter1"/><feColorMatrix in="shadowBlurOuter1" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.0906646286 0"/></filter><filter id="e" width="191.3%" height="269.6%" x="-45.7%" y="-49.1%" filterUnits="objectBoundingBox"><feOffset dy="4" in="SourceAlpha" result="shadowOffsetOuter1"/><feGaussianBlur in="shadowOffsetOuter1" result="shadowBlurOuter1" stdDeviation="2.5"/><feComposite in="shadowBlurOuter1" in2="SourceAlpha" operator="out" result="shadowBlurOuter1"/><feColorMatrix in="shadowBlurOuter1" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.0906646286 0"/></filter></defs><g fill="none" fill-rule="evenodd"><rect width="100" height="100" fill="#F7F8F6" rx="37"/><g transform="translate(22 29)"><use xlink:href="#a" fill="#000" filter="url(#c)"/><use xlink:href="#a" fill="#405236"/><path stroke="#405236" stroke-width="2.4" d="M46.058 18.8H33.542L28.4 29.083 14.858 2H2.342l22.4 44.8h7.316z"/></g><g transform="translate(22 29)"><use xlink:href="#d" fill="#000" filter="url(#e)"/><use xlink:href="#d" fill="#CD4000"/><path stroke="#CD4000" stroke-width="2.4" d="m50.058 10.8 4.4-8.8H41.942l-4.4 8.8z"/></g><g transform="translate(22 29)"><use xlink:href="#f" fill="#4A5E3F"/><path stroke="#405236" stroke-width="2.4" d="m32.06 46.8 2.575-5.112L14.857 2H2.342l22.4 44.8z"/></g><path stroke="#CD4000" stroke-linecap="square" stroke-width="2.4" d="M59.6 31h15.221M55.6 35h15.221M51.6 39.8h15.221"/></g></symbol>');
+addSymbol('<symbol id="verdaccio-small" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 100 100"><defs><path id="a" d="M48 17.6 32.8 48H24L.4.8h15.2l12.8 25.6 4.4-8.8z"/><path id="d" d="M50.8 12H35.6L41.2.8h15.2z"/><path id="f" d="M32.8 48H24L.4.8h15.2l20.377 40.89z"/><filter id="c" width="139.9%" height="140.3%" x="-20%" y="-11.7%" filterUnits="objectBoundingBox"><feOffset dy="4" in="SourceAlpha" result="shadowOffsetOuter1"/><feGaussianBlur in="shadowOffsetOuter1" result="shadowBlurOuter1" stdDeviation="2.5"/><feComposite in="shadowBlurOuter1" in2="SourceAlpha" operator="out" result="shadowBlurOuter1"/><feColorMatrix in="shadowBlurOuter1" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.0906646286 0"/></filter><filter id="e" width="191.3%" height="269.6%" x="-45.7%" y="-49.1%" filterUnits="objectBoundingBox"><feOffset dy="4" in="SourceAlpha" result="shadowOffsetOuter1"/><feGaussianBlur in="shadowOffsetOuter1" result="shadowBlurOuter1" stdDeviation="2.5"/><feComposite in="shadowBlurOuter1" in2="SourceAlpha" operator="out" result="shadowBlurOuter1"/><feColorMatrix in="shadowBlurOuter1" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.0906646286 0"/></filter></defs><g fill="none" fill-rule="evenodd"><rect width="100" height="100" fill="#F7F8F6" rx="37"/><g transform="translate(22 29)"><use xlink:href="#a" fill="#000" filter="url(#c)"/><use xlink:href="#a" fill="#405236"/><path stroke="#405236" stroke-width="2.4" d="M46.058 18.8H33.542L28.4 29.083 14.858 2H2.342l22.4 44.8h7.316z"/></g><g transform="translate(22 29)"><use xlink:href="#d" fill="#000" filter="url(#e)"/><use xlink:href="#d" fill="#CD4000"/><path stroke="#CD4000" stroke-width="2.4" d="m50.058 10.8 4.4-8.8H41.942l-4.4 8.8z"/></g><g transform="translate(22 29)"><use xlink:href="#f" fill="#4A5E3F"/><path stroke="#405236" stroke-width="2.4" d="m32.06 46.8 2.575-5.112L14.857 2H2.342l22.4 44.8z"/></g><path stroke="#CD4000" stroke-linecap="square" stroke-width="2.4" d="M59.6 31h15.221M55.6 35h15.221M51.6 39.8h15.221"/></g></symbol>', "verdaccio-small");
 "
 `;
 
@@ -182,7 +182,7 @@ if (typeof document !== "undefined") {
     insertSvgSprite();
   }
 }
-function addSymbol(symbolId, symbol) {
+function addSymbol(symbol, symbolId) {
   if (!root)
     return;
   const symbolNode = root.querySelector(\`#\${symbolId}\`);
@@ -195,8 +195,8 @@ function addSymbol(symbolId, symbol) {
   }
   root.insertAdjacentHTML("beforeend", symbol);
 }
-addSymbol("remove", '<symbol id="remove" viewBox="0 -960 960 960"><path d="M200-440v-80h560v80z"/></symbol>');
-addSymbol("close", '<symbol id="close" viewBox="0 -960 960 960"><path d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224z"/></symbol>');
+addSymbol('<symbol id="remove" viewBox="0 -960 960 960"><path d="M200-440v-80h560v80z"/></symbol>', "remove");
+addSymbol('<symbol id="close" viewBox="0 -960 960 960"><path d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224z"/></symbol>', "close");
 "
 `;
 
@@ -241,7 +241,7 @@ if (typeof document !== "undefined") {
     insertSvgSprite();
   }
 }
-function addSymbol(symbolId, symbol) {
+function addSymbol(symbol, symbolId) {
   if (!root)
     return;
   const symbolNode = root.querySelector(\`#\${symbolId}\`);
@@ -254,9 +254,9 @@ function addSymbol(symbolId, symbol) {
   }
   root.insertAdjacentHTML("beforeend", symbol);
 }
-addSymbol("add", '<symbol id="add" viewBox="0 -960 960 960"><path d="M440-440H200v-80h240v-240h80v240h240v80H520v240h-80z"/></symbol>');
-addSymbol("remove", '<symbol id="remove" viewBox="0 -960 960 960"><path d="M200-440v-80h560v80z"/></symbol>');
-addSymbol("verdaccio-small", '<symbol id="verdaccio-small" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 100 100"><defs><path id="a" d="M48 17.6 32.8 48H24L.4.8h15.2l12.8 25.6 4.4-8.8z"/><path id="d" d="M50.8 12H35.6L41.2.8h15.2z"/><path id="f" d="M32.8 48H24L.4.8h15.2l20.377 40.89z"/><filter id="c" width="139.9%" height="140.3%" x="-20%" y="-11.7%" filterUnits="objectBoundingBox"><feOffset dy="4" in="SourceAlpha" result="shadowOffsetOuter1"/><feGaussianBlur in="shadowOffsetOuter1" result="shadowBlurOuter1" stdDeviation="2.5"/><feComposite in="shadowBlurOuter1" in2="SourceAlpha" operator="out" result="shadowBlurOuter1"/><feColorMatrix in="shadowBlurOuter1" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.0906646286 0"/></filter><filter id="e" width="191.3%" height="269.6%" x="-45.7%" y="-49.1%" filterUnits="objectBoundingBox"><feOffset dy="4" in="SourceAlpha" result="shadowOffsetOuter1"/><feGaussianBlur in="shadowOffsetOuter1" result="shadowBlurOuter1" stdDeviation="2.5"/><feComposite in="shadowBlurOuter1" in2="SourceAlpha" operator="out" result="shadowBlurOuter1"/><feColorMatrix in="shadowBlurOuter1" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.0906646286 0"/></filter></defs><g fill="none" fill-rule="evenodd"><rect width="100" height="100" fill="#F7F8F6" rx="37"/><g transform="translate(22 29)"><use xlink:href="#a" fill="#000" filter="url(#c)"/><use xlink:href="#a" fill="#405236"/><path stroke="#405236" stroke-width="2.4" d="M46.058 18.8H33.542L28.4 29.083 14.858 2H2.342l22.4 44.8h7.316z"/></g><g transform="translate(22 29)"><use xlink:href="#d" fill="#000" filter="url(#e)"/><use xlink:href="#d" fill="#CD4000"/><path stroke="#CD4000" stroke-width="2.4" d="m50.058 10.8 4.4-8.8H41.942l-4.4 8.8z"/></g><g transform="translate(22 29)"><use xlink:href="#f" fill="#4A5E3F"/><path stroke="#405236" stroke-width="2.4" d="m32.06 46.8 2.575-5.112L14.857 2H2.342l22.4 44.8z"/></g><path stroke="#CD4000" stroke-linecap="square" stroke-width="2.4" d="M59.6 31h15.221M55.6 35h15.221M51.6 39.8h15.221"/></g></symbol>');
+addSymbol('<symbol id="add" viewBox="0 -960 960 960"><path d="M440-440H200v-80h240v-240h80v240h240v80H520v240h-80z"/></symbol>', "add");
+addSymbol('<symbol id="remove" viewBox="0 -960 960 960"><path d="M200-440v-80h560v80z"/></symbol>', "remove");
+addSymbol('<symbol id="verdaccio-small" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 100 100"><defs><path id="a" d="M48 17.6 32.8 48H24L.4.8h15.2l12.8 25.6 4.4-8.8z"/><path id="d" d="M50.8 12H35.6L41.2.8h15.2z"/><path id="f" d="M32.8 48H24L.4.8h15.2l20.377 40.89z"/><filter id="c" width="139.9%" height="140.3%" x="-20%" y="-11.7%" filterUnits="objectBoundingBox"><feOffset dy="4" in="SourceAlpha" result="shadowOffsetOuter1"/><feGaussianBlur in="shadowOffsetOuter1" result="shadowBlurOuter1" stdDeviation="2.5"/><feComposite in="shadowBlurOuter1" in2="SourceAlpha" operator="out" result="shadowBlurOuter1"/><feColorMatrix in="shadowBlurOuter1" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.0906646286 0"/></filter><filter id="e" width="191.3%" height="269.6%" x="-45.7%" y="-49.1%" filterUnits="objectBoundingBox"><feOffset dy="4" in="SourceAlpha" result="shadowOffsetOuter1"/><feGaussianBlur in="shadowOffsetOuter1" result="shadowBlurOuter1" stdDeviation="2.5"/><feComposite in="shadowBlurOuter1" in2="SourceAlpha" operator="out" result="shadowBlurOuter1"/><feColorMatrix in="shadowBlurOuter1" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.0906646286 0"/></filter></defs><g fill="none" fill-rule="evenodd"><rect width="100" height="100" fill="#F7F8F6" rx="37"/><g transform="translate(22 29)"><use xlink:href="#a" fill="#000" filter="url(#c)"/><use xlink:href="#a" fill="#405236"/><path stroke="#405236" stroke-width="2.4" d="M46.058 18.8H33.542L28.4 29.083 14.858 2H2.342l22.4 44.8h7.316z"/></g><g transform="translate(22 29)"><use xlink:href="#d" fill="#000" filter="url(#e)"/><use xlink:href="#d" fill="#CD4000"/><path stroke="#CD4000" stroke-width="2.4" d="m50.058 10.8 4.4-8.8H41.942l-4.4 8.8z"/></g><g transform="translate(22 29)"><use xlink:href="#f" fill="#4A5E3F"/><path stroke="#405236" stroke-width="2.4" d="m32.06 46.8 2.575-5.112L14.857 2H2.342l22.4 44.8z"/></g><path stroke="#CD4000" stroke-linecap="square" stroke-width="2.4" d="M59.6 31h15.221M55.6 35h15.221M51.6 39.8h15.221"/></g></symbol>', "verdaccio-small");
 "
 `;
 
@@ -281,7 +281,7 @@ if (typeof document !== "undefined") {
     insertSvgSprite();
   }
 }
-function addSymbol(symbolId, symbol) {
+function addSymbol(symbol, symbolId) {
   if (!root)
     return;
   const symbolNode = root.querySelector(\`#\${symbolId}\`);
@@ -294,6 +294,6 @@ function addSymbol(symbolId, symbol) {
   }
   root.insertAdjacentHTML("beforeend", symbol);
 }
-addSymbol("close", '<symbol id="close" viewBox="0 -960 960 960"><path d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224z"/></symbol>');
+addSymbol('<symbol id="close" viewBox="0 -960 960 960"><path d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224z"/></symbol>', "close");
 "
 `;

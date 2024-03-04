@@ -76,21 +76,21 @@ function normalizeBaseDirFunction(baseDir?: string | BaseDirFunction): BaseDirFu
 }
 
 /**
- * Check if the id is a svg file path.
+ * Check if the module id is a svg file path.
  *
- * @param id {string} id to check
+ * @param moduleId {string} id to check
  * @returns {boolean}
  */
-function isSvgFilePath(id: string): boolean {
-  if (!id) return false;
+function isSvgFilePath(moduleId: string): boolean {
+  if (!moduleId) return false;
 
-  const queryIndex = id.lastIndexOf("?");
+  const queryIndex = moduleId.lastIndexOf("?");
 
   if (queryIndex !== -1) {
-    id = id.slice(0, queryIndex);
+    moduleId = moduleId.slice(0, queryIndex);
   }
 
-  return id.endsWith(".svg");
+  return moduleId.endsWith(".svg");
 }
 
 export default async function svgCombiner(options: RollupSvgCombinerOptions = {}): Promise<Plugin> {
@@ -102,20 +102,20 @@ export default async function svgCombiner(options: RollupSvgCombinerOptions = {}
 
   const svgoConfig: SvgoConfig = await normalizeSvgoConfig(options.svgoConfig);
 
-  const svgSymbols = new Map<string, Record<"id" | "symbol", string>>();
+  const svgSymbols = new Map<string, Record<"moduleId" | "symbol", string>>();
 
   return {
     name: "vite:svg-combiner",
     enforce: "pre",
-    async load(id) {
-      if (!isSvgFilePath(id) || !filter(id)) {
+    async load(moduleId) {
+      if (!isSvgFilePath(moduleId) || !filter(moduleId)) {
         // ignore, other load function will handle it
         return null;
       }
 
-      const baseDir = baseDirFunction(id);
+      const baseDir = baseDirFunction(moduleId);
 
-      const filePath = getFilePath(id, baseDir);
+      const filePath = getFilePath(moduleId, baseDir);
 
       const symbolIdTemplate = symbolIdFunction(filePath);
 
@@ -125,17 +125,17 @@ export default async function svgCombiner(options: RollupSvgCombinerOptions = {}
 
       const symbolId = getSymbolId(filePath, symbolIdTemplate);
 
-      if (svgSymbols.has(symbolId) && id !== svgSymbols.get(symbolId)?.id) {
+      if (svgSymbols.has(symbolId) && moduleId !== svgSymbols.get(symbolId)?.moduleId) {
         this.warn(`Symbol id "${symbolId}" already exists, will be overwritten.`);
       }
 
-      const code: string = await fs.promises.readFile(id, "utf8");
+      const code: string = await fs.promises.readFile(moduleId, "utf8");
 
       const result = optimize(code, svgoConfig);
 
       const symbol = createSvgSymbol(result.data, symbolId);
 
-      svgSymbols.set(symbolId, { id, symbol });
+      svgSymbols.set(symbolId, { moduleId, symbol });
 
       const defaultExport = `export default ${JSON.stringify(symbolId)};`;
 
@@ -144,7 +144,7 @@ export default async function svgCombiner(options: RollupSvgCombinerOptions = {}
           code: [
             `import { addSymbol } from "${__packageName__}/runtime";`,
             "",
-            `addSymbol(${JSON.stringify(symbolId)}, ${JSON.stringify(symbol)});`,
+            `addSymbol(${JSON.stringify(symbol)}, ${JSON.stringify(symbolId)});`,
             "",
             defaultExport,
           ].join("\n"),

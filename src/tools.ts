@@ -27,13 +27,15 @@ export function createSvgSymbol(svg: string, id: string): string {
 /**
  * Get file path relative to baseDir
  *
- * @param id {string} the id of the file
+ * @param moduleId {string} the module id of the file
  * @param baseDir {string} the base directory
  *
  * @returns {string} the relative file path
  */
-export function getFilePath(id: string, baseDir: string): string {
-  return baseDir ? path.relative(baseDir, id).replaceAll(path.win32.sep, path.posix.sep) : id;
+export function getFilePath(moduleId: string, baseDir: string): string {
+  return baseDir
+    ? path.relative(baseDir, moduleId).replaceAll(path.win32.sep, path.posix.sep)
+    : moduleId;
 }
 
 /**
