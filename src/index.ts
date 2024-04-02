@@ -105,22 +105,7 @@ export default async function svgCombiner(options: RollupSvgCombinerOptions = {}
       };
     },
     transform(code, moduleId) {
-      let entryCodeInject = "";
-
-      if (options.elementId && this.getModuleInfo(moduleId)?.isEntry) {
-        entryCodeInject = [
-          `import { setElementId } from "${__packageName__}/runtime";`,
-          "",
-          `setElementId(${JSON.stringify(options.elementId)});`,
-          "",
-        ].join("\n");
-      }
-
       if (!isSvgFilePath(moduleId) || !filter(moduleId)) {
-        if (entryCodeInject) {
-          return entryCodeInject + code;
-        }
-
         return null;
       }
 
@@ -150,21 +135,19 @@ export default async function svgCombiner(options: RollupSvgCombinerOptions = {}
 
       if (!options.emitFile) {
         return {
-          code:
-            entryCodeInject +
-            [
-              `import { addSymbol } from "${__packageName__}/runtime";`,
-              "",
-              `addSymbol(${JSON.stringify(symbol)}, ${JSON.stringify(symbolId)});`,
-              "",
-              defaultExport,
-            ].join("\n"),
+          code: [
+            `import { addSymbol } from "${__packageName__}/runtime";`,
+            "",
+            `addSymbol(${JSON.stringify(symbol)}, ${JSON.stringify(symbolId)});`,
+            "",
+            defaultExport,
+          ].join("\n"),
           map: { mappings: "" },
         };
       }
 
       return {
-        code: entryCodeInject + defaultExport,
+        code: defaultExport,
         map: { mappings: "" },
       };
     },
@@ -177,7 +160,7 @@ export default async function svgCombiner(options: RollupSvgCombinerOptions = {}
           fileName: typeof options.emitFile === "string" ? options.emitFile : defaultFileName,
           source: createSvgSprite(
             [...svgSymbols.values()].map((item) => item.symbol),
-            options.elementId ?? defaultSvgSpriteId,
+            defaultSvgSpriteId,
           ),
         });
       }

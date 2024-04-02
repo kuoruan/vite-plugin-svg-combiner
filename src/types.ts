@@ -9,7 +9,6 @@ export interface RollupSvgCombinerOptions {
   include?: FilterPattern;
   exclude?: FilterPattern;
   emitFile?: boolean | string;
-  elementId?: string;
   symbolId?: string | SymbolIdFunction;
   baseDir?: string | BaseDirFunction;
   svgoConfig?: Config | string;

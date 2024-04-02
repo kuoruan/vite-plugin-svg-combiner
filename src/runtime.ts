@@ -1,11 +1,11 @@
 let root: SVGSVGElement;
 
-let elementId = "svg-sprite";
+const symbols: string[] = [];
 
 if (typeof document !== "undefined") {
   root = document.createElementNS("http://www.w3.org/2000/svg", "svg");
 
-  root.id = elementId;
+  root.id = "svg-sprite";
 
   root.style.position = "absolute";
   root.style.left = "-1px";
@@ -25,25 +25,22 @@ if (typeof document !== "undefined") {
   }
 }
 
-export function setElementId(id: string): void {
-  elementId = id;
-
-  if (root) {
-    root.id = id;
-  }
-}
-
 export function addSymbol(symbol: string, symbolId: string): void {
   if (!root) return;
 
-  const symbolNode = root.querySelector(`#${symbolId}`);
-  if (symbolNode) {
+  // eslint-disable-next-line unicorn/prefer-includes
+  if (symbols.indexOf(symbolId) > -1) {
     try {
-      symbolNode.remove();
+      const symbolNode = root.querySelector(`#${symbolId}`);
+      if (symbolNode) {
+        // eslint-disable-next-line unicorn/prefer-dom-node-remove
+        root.removeChild(symbolNode);
+      }
     } catch {
-      // eslint-disable-next-line unicorn/prefer-dom-node-remove
-      root.removeChild(symbolNode);
+      console.warn(`svg symbol #${symbolId} is not a valid selector, cannot remove old.`);
     }
+  } else {
+    symbols.push(symbolId);
   }
 
   root.insertAdjacentHTML("beforeend", symbol);
