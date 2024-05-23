@@ -80,8 +80,8 @@ describe("tools", () => {
     });
 
     it("should get file path with backslash", () => {
-      const id = "C:\\path\\to\\file.svg";
-      const baseDir = "C:\\path";
+      const id = String.raw`C:\path\to\file.svg`;
+      const baseDir = String.raw`C:\path`;
 
       const result = getFilePath(id, baseDir);
 
