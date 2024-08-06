@@ -20,6 +20,7 @@
   },
   "publishConfig": {
     "access": "public",
+    "provenance": true,
     "directory": "dist",
     "main": "./cjs/index.js",
     "module": "./es/index.mjs",
