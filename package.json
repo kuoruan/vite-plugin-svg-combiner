@@ -44,6 +44,7 @@
     "build": "rimraf dist && rollup -c",
     "copy": "copyfiles package.json README.md LICENSE dist",
     "test": "vitest --run",
+    "test:update": "vitest --run --update",
     "bundle": "pnpm build && pnpm copy"
   },
   "keywords": [
