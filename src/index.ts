@@ -1,4 +1,5 @@
 import fs from "node:fs";
+import { cwd } from "node:process";
 
 import { createFilter } from "@rollup/pluginutils";
 import deepmerge from "deepmerge";
@@ -30,7 +31,7 @@ const defaultSvgoConfig: SvgoConfig = {
   ],
 };
 
-const defaultBaseDir: string = process.cwd();
+const defaultBaseDir: string = cwd();
 
 /**
  * Normalize svgo config, load config from file if config is a string.
