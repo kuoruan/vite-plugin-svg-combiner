@@ -3,18 +3,19 @@
   "version": "0.5.1",
   "description": "Another svg sprites plugin for Vite",
   "private": false,
-  "main": "./dist/cjs/index.js",
-  "module": "./dist/es/index.mjs",
+  "type": "module",
+  "main": "./dist/cjs/index.cjs",
+  "module": "./dist/es/index.js",
   "types": "./dist/types/index.d.ts",
   "exports": {
     ".": {
-      "import": "./dist/es/index.mjs",
-      "require": "./dist/cjs/index.js",
+      "import": "./dist/es/index.js",
+      "require": "./dist/cjs/index.cjs",
       "types": "./dist/types/index.d.ts"
     },
     "./runtime": {
-      "import": "./dist/es/runtime.mjs",
-      "require": "./dist/cjs/runtime.js",
+      "import": "./dist/es/runtime.js",
+      "require": "./dist/cjs/runtime.cjs",
       "types": "./dist/types/runtime.d.ts"
     }
   },
@@ -22,18 +23,18 @@
     "access": "public",
     "provenance": true,
     "directory": "dist",
-    "main": "./cjs/index.js",
-    "module": "./es/index.mjs",
+    "main": "./cjs/index.cjs",
+    "module": "./es/index.js",
     "types": "./types/index.d.ts",
     "exports": {
       ".": {
-        "import": "./es/index.mjs",
-        "require": "./cjs/index.js",
+        "import": "./es/index.js",
+        "require": "./cjs/index.cjs",
         "types": "./types/index.d.ts"
       },
       "./runtime": {
-        "import": "./es/runtime.mjs",
-        "require": "./cjs/runtime.js",
+        "import": "./es/runtime.js",
+        "require": "./cjs/runtime.cjs",
         "types": "./types/runtime.d.ts"
       }
     }

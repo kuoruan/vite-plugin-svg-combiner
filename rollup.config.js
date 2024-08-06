@@ -10,12 +10,12 @@ export default defineConfig([
     input: "./src/index.ts",
     output: [
       {
-        entryFileNames: "es/[name].mjs",
+        entryFileNames: "es/[name].js",
         format: "es",
         dir: "dist",
       },
       {
-        entryFileNames: "cjs/[name].js",
+        entryFileNames: "cjs/[name].cjs",
         format: "cjs",
         dir: "dist",
         exports: "auto",
@@ -45,12 +45,12 @@ export default defineConfig([
     input: "./src/runtime.ts",
     output: [
       {
-        entryFileNames: "es/[name].mjs",
+        entryFileNames: "es/[name].js",
         format: "es",
         dir: "dist",
       },
       {
-        entryFileNames: "cjs/[name].js",
+        entryFileNames: "cjs/[name].cjs",
         format: "cjs",
         dir: "dist",
         exports: "auto",
